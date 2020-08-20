@@ -23,7 +23,7 @@ export default class SignIn extends React.Component {
         return (
           <div>
             <h1>Enter the information below to create an account</h1>
-            <form onSubmit={this.handleCreate}>
+            <form className='login-form' onSubmit={this.handleCreate}>
                 <label>Email:
                     <input onChange={e => this.setState({ signInEmail: e.target.value})} type='email' value={this.state.signInEmail}/>
                 </label>

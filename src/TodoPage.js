@@ -42,7 +42,7 @@ export default class TodoPage extends React.Component {
   render() {
     console.log('render', this.state)
     return (
-      <div>
+      <div className='todo-list'>
         <h2>List of things to do</h2>
         <form onSubmit={this.handleNewTodo}>
           <label>To Do
@@ -50,9 +50,9 @@ export default class TodoPage extends React.Component {
           </label>
           <button>Add Item</button>
         </form>
-        <ul>
+        <ul>(Click to mark as complete)
           {
-            this.state.todos.map((task, i) => <li onClick={() => this.handleClick(task.id, i)} className={this.getClassName(task)} key={'list-item' + i}>{task.todo}{task.completed && ' is complete'}</li>)
+            this.state.todos.map((task, i) => <h4 onClick={() => this.handleClick(task.id, i)} className={this.getClassName(task)} key={'list-item' + i}>{task.todo}{task.completed && ' is complete'}</h4>)
           }
         </ul>
       </div>
