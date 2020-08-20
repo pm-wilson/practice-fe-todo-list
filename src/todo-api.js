@@ -33,8 +33,7 @@ export function fetchTodos() {
 export function addTodo(newTodo) {
     const token = localStorage.getItem('TOKEN');
     try {
-        return request
-            .post(`${URL}/api/todos`, newTodo)
+        return request.post(`${URL}/api/todos`, newTodo)
             .set('Authorization', token);
     } catch(e) {
         return { error: e.message }
@@ -42,8 +41,9 @@ export function addTodo(newTodo) {
 }
 
 export function updateTodo(id, updatedTodo) {
+    console.log('update', updatedTodo, id)
     const token = localStorage.getItem('TOKEN');
 
-    return request.put(`${URL}/api/guitars/${id}`, updatedTodo)
+    return request.put(`${URL}/api/todos/${id}`, updatedTodo)
         .set('Authorization', token);
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { fetchTodos, addTodo } from './todo-api.js';
+import { fetchTodos, addTodo, updateTodo } from './todo-api.js';
 
 export default class TodoPage extends React.Component {
   state = {
@@ -14,27 +14,47 @@ export default class TodoPage extends React.Component {
     this.setState({todos: data.body});
   }
 
-  handleNewTodo = async() => {
-    const newTodo = {todo: this.state.newItem, completed: this.state.newCompleted};
+  handleNewTodo = async(e) => {
+    e.preventDefault();
 
-    await addTodo(newTodo);
-    this.setState({newItem: '', newCompleted: false});
+    await addTodo({todo: this.state.newItem, completed: false});
+
+    const data = await fetchTodos();
+
+    this.setState({newItem: '', newCompleted: false, todos: data.body});
+  }
+
+  handleClick = async (id, i) => {
+    const info = {todo: this.state.todos[i].todo, completed: true};
+
+    await updateTodo(id, info);
+
+    const data = await fetchTodos();
+
+    this.setState({todos: data.body});
+  }
+
+  getClassName = (task) => {
+    if (task.completed) return 'complete';
+    if (!task.completed) return 'incomplete';
   }
 
   render() {
+    console.log('render', this.state)
     return (
       <div>
         <h2>List of things to do</h2>
         <form onSubmit={this.handleNewTodo}>
-          <label>Completed
-            <input type='checkbox' onChange={e => this.setState({ newCompleted: e.target.checked})} checked={this.state.newCompleted}/>
-          </label>
           <label>To Do
             <input onChange={e => this.setState({ newItem: e.target.value})} value={this.state.newItem}/>
           </label>
           <button>Add Item</button>
         </form>
-
+        <ul>
+          {
+            this.state.todos.map((task, i) => <li onClick={() => this.handleClick(task.id, i)} className={this.getClassName(task)} key={'list-item' + i}>{task.todo}{task.completed && ' is complete'}</li>)
+          }
+        </ul>
       </div>
     );
   }
