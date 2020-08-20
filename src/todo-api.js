@@ -6,7 +6,7 @@ export function signUp(userData) {
     try {
         return request.post(`${URL}/auth/signup`, userData);
     } catch(e) {
-        throw { error: e.message }
+        return { error: e.message }
     }
 }
 
@@ -14,12 +14,12 @@ export function signIn(userData) {
     try {
         return request.post(`${URL}/auth/signin`, userData);
     } catch(e) {
-        throw { error: e.message }
+        return { error: e.message }
     }
 }
 
 export function fetchTodos() {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('TOKEN');
 
     try {
         return request
@@ -30,8 +30,19 @@ export function fetchTodos() {
     }
 }
 
+export function addTodo(newTodo) {
+    const token = localStorage.getItem('TOKEN');
+    try {
+        return request
+            .post(`${URL}/api/todos`, newTodo)
+            .set('Authorization', token);
+    } catch(e) {
+        return { error: e.message }
+    }
+}
+
 export function updateTodo(id, updatedTodo) {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('TOKEN');
 
     return request.put(`${URL}/api/guitars/${id}`, updatedTodo)
         .set('Authorization', token);

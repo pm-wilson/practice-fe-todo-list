@@ -14,9 +14,9 @@ export default class SignIn extends React.Component {
             email: this.state.signInEmail,
             password: this.state.signInPassword
         })
-
+        
         this.props.handleTokenChange(user.body.token);
-        this.props.history.push('/')
+        this.props.history.push('/todos')
     }
 
     render() {

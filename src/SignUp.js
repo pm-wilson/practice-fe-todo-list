@@ -16,7 +16,7 @@ export default class SignUp extends React.Component {
         })
 
         this.props.handleTokenChange(user.body.token);
-        this.props.history.push('/')
+        this.props.history.push('/todos')
     }
 
     render() {
